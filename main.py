@@ -18,6 +18,7 @@ def connect(host='http://google.com'):
     except:
         return False
 
+
 # Перевод изображений в формат PNG с одним размером. Изображения такого формата сохраняются в папку temp
 def convertToPNG(img_path):
     if os.path.exists('temp') is False:
