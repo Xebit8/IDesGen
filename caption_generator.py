@@ -7,9 +7,9 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 
-tokenizer = load(open('tokenizer(NEW).p', 'rb'))
+tokenizer = load(open('train model\\IMPORTANT DATA\\tokenizer(NEW).p', 'rb'))
 max_length = 34
-model = load_model('models(NEW)\\model_20.h5')
+model = load_model('train model\\models(NEW)\\model_20.h5')
 
 
 class CaptionGenerator:
