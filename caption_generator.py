@@ -1,5 +1,6 @@
 import numpy as np
 from pickle import load
+from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.models import load_model
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.applications.vgg16 import VGG16, preprocess_input
@@ -7,9 +8,9 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 
 
-tokenizer = load(open('train model\\IMPORTANT DATA\\tokenizer(NEW).p', 'rb'))
-max_length = 34
-model = load_model('train model\\models(NEW)\\model_20.h5')
+tokenizer = load(open('train model\\important data\\tokenizer.p', 'rb'))
+max_length = 18
+model = load_model('train model\\models\\model_75.h5')
 
 
 class CaptionGenerator:

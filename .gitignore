@@ -1,9 +1,2 @@
-/.idea/
-/old/
-/train model/.ipynb_checkpoints/
-/train model/DATASETS/
-/train model/IMPORTANT DATA/
-/train model/descriptions(NEW).txt
-/train model/features(NEW).p
-/history_database.db
-/IDESGEN.bat
+history_database.db
+train model/important data

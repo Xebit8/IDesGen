@@ -10,6 +10,12 @@ from caption_generator import max_length, tokenizer, model, CaptionGenerator
 from database import DatabaseInput, DatabaseOutput
 
 
+mainColor = "#212121"
+secondaryColor = "#ffffff"
+textColor = "#000000"
+buttonPressedColor = "#7A7A7A"
+
+
 # Проверяем, подключен ли компьютер к сети
 def connect(host='http://google.com'):
     try:
@@ -55,7 +61,7 @@ def translate_caption_lang(caption):
 # Окно с инструкцией
 def instruction():
     def border(elem):
-        return sg.Frame('', [[elem]], background_color='#3721AF')
+        return sg.Frame('', [[elem]], background_color=secondaryColor)
 
     instruction_text = '''      Для начала работы генератора подписей необходимо выбрать изображение. Для этого нужно 
 нажать на кнопку "Выбрать изображение". После этого появится кнопка "Начать", которая
@@ -67,11 +73,11 @@ def instruction():
 выдавала программа по вашим изображениям. Переход по результатам возможен путём исполь-
 зования стрелочек (< >). Вы также можете нажать на кнопку "Очистить историю", чтобы 
 очистить историю результатов. Кнопка "Назад" вернёт вас обратно в главное окно.'''
-    layout = [[border(sg.Button('Назад', size=(20, 2), mouseover_colors='#3721AF')), border(sg.Text(text=instruction_text, background_color='#FFFFFF', text_color='#000000'))]]
+    layout = [[border(sg.Button('Назад', size=(20, 2), mouseover_colors=buttonPressedColor)), border(sg.Text(text=instruction_text, background_color=secondaryColor, text_color=textColor))]]
     window = sg.Window('Инструкция',
                        layout,
-                       background_color='#FFFFFF',
-                       button_color=('#3721AF', 'white'),
+                       background_color=mainColor,
+                       button_color=(mainColor, secondaryColor),
                        font='SourceSansPro',
                        resizable=False)
     return window
@@ -80,22 +86,22 @@ def instruction():
 # Окно с историей
 def history():
     def border(elem):
-        return sg.Frame('', [[elem]], background_color='#3721AF')
+        return sg.Frame('', [[elem]], background_color=secondaryColor)
 
-    left_side = [[border(sg.Button('<', size=(2, 2), key='left_btn', mouseover_colors='#3721AF'))]]
-    right_side = [[border(sg.Button('>', size=(2, 2), key='right_btn', mouseover_colors='#3721AF'))]]
-    center = [[border(sg.Image(background_color='#3721AF', size=(520, 356), key='img'))],
-              [sg.Text("", size=(47, 2), background_color='#3721AF', justification='c', key='caption')],
-              [sg.Button('Скопировать', key='copy_history', button_color='#3721AF')],
-              [border(sg.Button('Назад', size=(20, 2)))]]
-    layout = [[sg.Column([[border(sg.Button('Очистить историю', key='clear', button_color='#3721AF', mouseover_colors=('#3721AF', 'white')))]], justification='r', background_color='white')],
-              [sg.Column(left_side, element_justification='c', background_color='#FFFFFF'),
-              sg.Column(center, element_justification='c', background_color='#FFFFFF'),
-              sg.Column(right_side, element_justification='c', background_color='#FFFFFF')]]
+    left_side = [[border(sg.Button('<', size=(2, 2), key='left_btn', mouseover_colors=buttonPressedColor))]]
+    right_side = [[border(sg.Button('>', size=(2, 2), key='right_btn', mouseover_colors=buttonPressedColor))]]
+    center = [[border(sg.Image(background_color=mainColor, size=(520, 356), key='img'))],
+              [sg.Text("", size=(47, 2), background_color=mainColor, justification='c', key='caption')],
+              [sg.Button('Скопировать', key='copy_history', button_color=(textColor, secondaryColor), mouseover_colors=buttonPressedColor)],
+              [border(sg.Button('Назад', size=(20, 2), mouseover_colors=buttonPressedColor))]]
+    layout = [[sg.Column([[border(sg.Button('Очистить историю', key='clear', button_color=(textColor, secondaryColor), mouseover_colors=(buttonPressedColor)))]], justification='r', background_color=mainColor)],
+              [sg.Column(left_side, element_justification='c', background_color=mainColor),
+              sg.Column(center, element_justification='c', background_color=mainColor),
+              sg.Column(right_side, element_justification='c', background_color=mainColor)]]
     window = sg.Window('История',
                        layout,
-                       background_color='#FFFFFF',
-                       button_color=('#3721AF', 'white'),
+                       background_color=mainColor,
+                       button_color=(mainColor, secondaryColor),
                        font='SourceSansPro',
                        resizable=False)
     return window
@@ -105,42 +111,42 @@ def history():
 def main_window():
 
     def border(elem):
-        enabled = sg.Frame('', [[elem]], background_color='#3721AF')
+        enabled = sg.Frame('', [[elem]], background_color=secondaryColor)
         return enabled
 
     # Сторона главного окна с кнопками
-    input_side = [[border(sg.Button('Инструкция', size=(20, 2), mouseover_colors='#3721AF'))],
+    input_side = [[border(sg.Button('Инструкция', size=(20, 2), mouseover_colors=buttonPressedColor))],
                   [border(sg.Button('Выбрать изображение',
                                     button_type=2,
                                     key='Browse',
                                     target='file_browsed',
                                     size=(20, 2),
-                                    mouseover_colors='#3721AF'))],
+                                    mouseover_colors=buttonPressedColor))],
                   [sg.Frame('',
-                            [[sg.Button('Начать', size=(20, 2), disabled=True, key='start', mouseover_colors='#3721AF')]],
-                            background_color='#3721AF',
+                            [[sg.Button('Начать', size=(20, 2), disabled=True, key='start', mouseover_colors=buttonPressedColor)]],
+                            background_color=secondaryColor,
                             key='disabled_start',
                             visible=False)],
                   [sg.Frame('',
-                            [[sg.Button('История', size=(20, 2), disabled=True, key='history', mouseover_colors='#3721AF')]],
-                            background_color='#3721AF',
+                            [[sg.Button('История', size=(20, 2), disabled=True, key='history', mouseover_colors=buttonPressedColor)]],
+                            background_color=secondaryColor,
                             key='disabled_history',
                             visible=False)]]
 
     # Сторона главного окна с изображением и его подписью
-    output_side = [[border(sg.Image(background_color='#3721AF', key='img', size=(520, 356)))],
-                   [sg.Text("", size=(47, 2), key='caption', background_color='#3721AF', justification='c')],
+    output_side = [[border(sg.Image(background_color=mainColor, key='img', size=(520, 356)))],
+                   [sg.Text("", size=(47, 2), key='caption', background_color=mainColor, justification='c')],
                    [sg.Input("", size=(47, 2), enable_events=True, key='file_browsed', visible=False)],
-                   [sg.Button('Скопировать', key='copy_main', button_color='#3721AF')]]
+                   [sg.Button('Скопировать', key='copy_main', button_color=(textColor, secondaryColor), mouseover_colors=buttonPressedColor)]]
 
     # Главное окно целиком
-    layout = [[sg.Column(input_side, element_justification='c', background_color='#FFFFFF'), sg.Column(output_side, element_justification='c', background_color='#FFFFFF')]]
+    layout = [[sg.Column(input_side, element_justification='c', background_color=mainColor), sg.Column(output_side, element_justification='c', background_color=mainColor)]]
 
     # Создание окна приложения и его настройка
     window = sg.Window("«IDesGen» - генератор подписей к изображениям",
                        layout,
-                       background_color='#FFFFFF',
-                       button_color=('#3721AF', 'white'),
+                       background_color=mainColor,
+                       button_color=(mainColor, secondaryColor),
                        font='SourceSansPro',
                        resizable=False)
 

@@ -10,3 +10,12 @@ Below are screenshots of the actual program:
 ![IDesGen Picking Image For Test](idesgen_screenshot2.png)
 
 ![IDesGen Result](idesgen_screenshot3.png)
+
+### How to start an app
+Requirements:
+Python 3.10
+You can install my used modules with:
+```
+pip install misc/requirements.txt
+```
+Now you should be OK!
