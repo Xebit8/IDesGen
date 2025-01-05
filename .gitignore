@@ -1,2 +1,5 @@
 history_database.db
 train model/important data
+.ipynb_checkpoints
+__pycache__/
+train model/.ipynb_checkpoints
